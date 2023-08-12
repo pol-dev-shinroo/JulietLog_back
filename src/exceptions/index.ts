@@ -14,3 +14,11 @@ export const NotFoundException = (table_name: string) => {
         message: `${table_name} does not exist`,
     };
 };
+
+export const cloudinaryException = (error: any) => {
+    throw {
+        code: StatusCodes.BAD_REQUEST,
+        message: 'something wrong with cloudinary',
+        error: 'invalid file',
+    };
+};

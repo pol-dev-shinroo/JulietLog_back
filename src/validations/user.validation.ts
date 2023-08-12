@@ -1,7 +1,9 @@
 import Joi from 'joi';
 
 export const create_user_validation = Joi.object({
-    name: Joi.string().required(),
+    nickname: Joi.string().required(),
 
     email: Joi.string().email().required(),
+
+    password: Joi.string().required(),
 }).unknown(false);

@@ -3,6 +3,7 @@ import { asyncWrapper, customResponse, createRoutes } from '@/common/index';
 import { createUserRoutes } from '@/routes/user.routes';
 import { StatusCodes } from 'http-status-codes';
 import { userService } from '@/services/index';
+import { log } from 'console';
 
 class UserController implements Controller {
     public path = '/user';
@@ -23,10 +24,13 @@ class UserController implements Controller {
 
     private create: RequestResponseHandler = asyncWrapper(async (req, res) => {
         const response = customResponse(res);
-        const { name, email } = req.body;
-        console.log(req.body);
+        const req_data = { ...req.body };
+
         try {
-            const user = await userService.create({ name, email });
+            const user = await userService.create({
+                ...req_data,
+                profileImg: req_data.profile_img,
+            });
             response.success({ code: StatusCodes.CREATED, data: user });
         } catch (err) {
             response.error(err as ErrorData);

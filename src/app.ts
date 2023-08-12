@@ -5,6 +5,7 @@ import { morganMiddleware } from '@/utils/index';
 import { errorMiddleware } from '@/middlewares/index';
 import rateLimit from 'express-rate-limit';
 import compression from 'compression';
+import { v2 as cloudinary } from 'cloudinary';
 import db from '@/database/db';
 
 interface IAppParamters {
@@ -20,6 +21,7 @@ class App {
         this.initializeMiddleware();
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
+        this.initializeCloudinary();
     }
 
     private initializeMiddleware() {
@@ -35,7 +37,7 @@ class App {
                 max: 100,
             })
         );
-        this.express.use(compression()); // makes
+        this.express.use(compression());
     }
 
     private initializeControllers(controllers: Controller[]): void {
@@ -46,6 +48,14 @@ class App {
 
     private initializeErrorHandling(): void {
         this.express.use(errorMiddleware);
+    }
+
+    private initializeCloudinary(): void {
+        cloudinary.config({
+            cloud_name: process.env.CLOUD_NAME,
+            api_key: process.env.CLOUD_API_KEY,
+            api_secret: process.env.CLOUD_API_SECRET,
+        });
     }
 
     public listen(): void {

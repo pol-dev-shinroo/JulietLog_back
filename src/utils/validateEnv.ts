@@ -10,6 +10,9 @@ const validateEnv = (): void => {
         DB_PORT: str(),
         DB_USER: str(),
         DB_PASSWORD: str(),
+        CLOUD_NAME: str(),
+        CLOUD_API_KEY: str(),
+        CLOUD_API_SECRET: str(),
     });
 };
 
