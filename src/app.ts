@@ -35,7 +35,7 @@ class App {
             rateLimit({
                 windowMs: 15 * 60 * 1000,
                 max: 100,
-            }),
+            })
         );
         this.express.use(compression());
     }
@@ -71,7 +71,7 @@ class App {
                 return db.sequelize.sync({ force: false });
             })
             .then(() => this.listen())
-            .catch((error) => console.log(error));
+            .catch((error: any) => console.log(error));
     }
 }
 export default App;
