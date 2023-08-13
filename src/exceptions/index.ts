@@ -30,3 +30,11 @@ export const UnauthorizedException = (message: any) => {
         error: 'validation error',
     };
 };
+
+export const externalApiError = (msg: string) => {
+    throw {
+        code: StatusCodes.BAD_GATEWAY,
+        message: msg,
+        error: 'validation error',
+    };
+};
