@@ -13,6 +13,6 @@ export const authService = {
 
         await this.repository.updateAccessToken(user.id, accessToken);
         await this.repository.updateRefreshToken(user.id, refreshToken);
-        return;
+        return { accessToken, refreshToken };
     },
 };
