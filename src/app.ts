@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import { v2 as cloudinary } from 'cloudinary';
 import db from '@/database/db';
+import cookieParser from 'cookie-parser';
 
 interface IAppParamters {
     controllers: Controller[];
@@ -32,6 +33,7 @@ class App {
                 credentials: true,
             }),
         );
+        this.express.use(cookieParser());
         this.express.use(morganMiddleware);
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: false }));

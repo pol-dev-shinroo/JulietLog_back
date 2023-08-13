@@ -31,14 +31,8 @@ class AuthController implements Controller {
                 email,
                 password,
             });
-            res.cookie('accesstoken', accessToken, {
-                httpOnly: true,
-                sameSite: 'none',
-            });
-            res.cookie('refreshtoken', refreshToken, {
-                httpOnly: true,
-                sameSite: 'none',
-            });
+            res.cookie('accesstoken', accessToken);
+            res.cookie('refreshtoken', refreshToken);
             response.success({
                 code: StatusCodes.OK,
                 message: 'user logged in',
