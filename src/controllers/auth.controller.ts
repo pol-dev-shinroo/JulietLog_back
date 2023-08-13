@@ -26,7 +26,12 @@ class AuthController implements Controller {
         const { email, password } = req.body;
         console.log(req.headers.cookie);
         try {
-            await authService.login({ email, password });
+            const { accessToken, refreshToken } = await authService.login({
+                email,
+                password,
+            });
+            res.cookie('accesstoken', accessToken);
+            res.cookie('refreshtoken', refreshToken);
             response.success({
                 code: StatusCodes.OK,
                 message: 'user logged in',
