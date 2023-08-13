@@ -29,8 +29,12 @@ class UserController implements Controller {
                 ...req_data,
                 profileImg: req_data.profile_img,
             });
-            res.cookie('accesstoken', createData.authTokens.accessToken);
-            res.cookie('refreshtoken', createData.authTokens.refreshToken);
+            res.cookie('accesstoken', createData.authTokens.accessToken, {
+                httpOnly: true,
+            });
+            res.cookie('refreshtoken', createData.authTokens.refreshToken, {
+                httpOnly: true,
+            });
             response.success({ code: StatusCodes.CREATED });
         } catch (err) {
             response.error(err as ErrorData);

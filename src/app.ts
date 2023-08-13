@@ -28,7 +28,7 @@ class App {
         this.express.use(helmet());
         this.express.use(
             cors({
-                origin: '*',
+                origin: 'http://localhost:3000',
                 credentials: true,
             }),
         );
