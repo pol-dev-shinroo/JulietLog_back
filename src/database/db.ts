@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import { SEQUELIZE_CONFIGS } from '@/common/db_constants';
-import { UserGenerator, UserModel } from './models/user';
-
+import { AuthModel, AuthGenerator } from './models/auth.model';
+import { UsersModel, UsersGenerator } from './models/users.model';
 import { relations } from './relations';
 
 const sequelize = new Sequelize(SEQUELIZE_CONFIGS);
@@ -16,14 +16,16 @@ declare global {
     interface DB {
         Sequelize: typeof Sequelize;
         sequelize: Sequelize;
-        User: typeof UserModel;
+        Auth: typeof AuthModel;
+        Users: typeof UsersModel;
     }
 }
 
 const db: DB = {
     Sequelize,
     sequelize,
-    User: UserGenerator(sequelize),
+    Auth: AuthGenerator(sequelize),
+    Users: UsersGenerator(sequelize),
 };
 
 relations(db);

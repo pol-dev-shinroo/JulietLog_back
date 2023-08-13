@@ -7,3 +7,9 @@ export const create_user_validation = Joi.object({
 
     password: Joi.string().required(),
 }).unknown(false);
+
+export const add_neighbor_validation = Joi.object({
+    userId: Joi.number().required(),
+
+    neighborId: Joi.number().required(),
+}).unknown(false);

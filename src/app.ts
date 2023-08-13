@@ -26,7 +26,12 @@ class App {
 
     private initializeMiddleware() {
         this.express.use(helmet());
-        this.express.use(cors());
+        this.express.use(
+            cors({
+                origin: 'http://localhost:3000',
+                credentials: true,
+            }),
+        );
         this.express.use(morganMiddleware);
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: false }));

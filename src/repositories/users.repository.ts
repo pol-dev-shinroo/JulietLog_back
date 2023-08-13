@@ -1,26 +1,24 @@
 import { db, defaultOptions } from '@/database/index';
 import { dbException, NotFoundException } from '@/exceptions/index';
 
-export const userRepository = {
-    async create(userData: UserCreateInterface) {
+export const usersRepository = {
+    async create(userData: UsersCreateInterface) {
         try {
-            const user = await db.User.create(userData);
+            const user = await db.Users.create(userData);
             return user;
         } catch (err) {
             return dbException(err);
         }
     },
 
-    async getUser(userId: UserGetInterface) {
+    async getUser(userData: UsersGetInterface) {
         try {
-            const user = await db.User.findOne({
+            const user = await db.Users.findOne({
                 ...defaultOptions,
-                where: {
-                    id: userId,
-                },
+                where: userData,
             });
             if (!user) {
-                return NotFoundException('user');
+                return NotFoundException('user does not exist');
             }
             return user;
         } catch (err) {
