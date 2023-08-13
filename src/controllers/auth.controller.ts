@@ -24,6 +24,7 @@ class AuthController implements Controller {
     private login: RequestResponseHandler = asyncWrapper(async (req, res) => {
         const response = customResponse(res);
         const { email, password } = req.body;
+        console.log(req.headers.cookie);
         try {
             await authService.login({ email, password });
             response.success({
