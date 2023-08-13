@@ -8,8 +8,8 @@ export const SEQUELIZE_CONFIGS: Options = {
     database: String(databaseName),
     host: String(process.env.DB_HOST || 'localhost'),
     port: Number(process.env.DB_PORT || 3306),
-    username: String(process.env.DB_USER || 'root'),
-    password: String(process.env.DB_PASSWORD || ''),
+    username: String(process.env.DB_USER || 'juliet'),
+    password: String(process.env.DB_PASSWORD || 'juliet0824'),
     define: {
         charset: 'utf8mb4',
         collate: 'utf8mb4_general_ci',
