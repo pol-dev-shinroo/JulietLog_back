@@ -1,6 +1,6 @@
 import { authRepository, usersRepository } from '@/repositories/index';
 import { tokenGenerator } from '@/utils/index';
-import { cloudinary } from '@/apis/index';
+import { googleLoginApi } from '@/apis/index';
 
 export const authService = {
     repository: authRepository,
@@ -14,5 +14,9 @@ export const authService = {
         await this.repository.updateAccessToken(user.id, accessToken);
         await this.repository.updateRefreshToken(user.id, refreshToken);
         return { accessToken, refreshToken };
+    },
+
+    async googleLogin(code: string) {
+        return await googleLoginApi(code);
     },
 };

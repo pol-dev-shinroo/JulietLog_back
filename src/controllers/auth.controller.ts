@@ -17,6 +17,7 @@ class AuthController implements Controller {
         const customRoutes: CustomRoutes = createAuthRoutes(
             this.path,
             this.login,
+            this.googleLogin,
         );
         createRoutes(customRoutes, this.router);
     }
@@ -40,6 +41,23 @@ class AuthController implements Controller {
             response.error(err as ErrorData);
         }
     });
+
+    private googleLogin: RequestResponseHandler = asyncWrapper(
+        async (req, res) => {
+            const response = customResponse(res);
+            const { code } = req.body;
+            const data = await authService.googleLogin(code);
+            console.log(data);
+            try {
+                response.success({
+                    code: StatusCodes.OK,
+                    message: 'user logged in',
+                });
+            } catch (err) {
+                response.error(err as ErrorData);
+            }
+        },
+    );
 }
 
 export default AuthController;
