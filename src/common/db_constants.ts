@@ -1,12 +1,7 @@
 import { Dialect, Options } from 'sequelize/types';
 export const PORT = Number(process.env.PORT || 5000);
 
-const databaseName =
-    process.env.NODE_ENV === 'test'
-        ? process.env.TEST_DB_NAME
-        : process.env.NODE_ENV === 'production'
-        ? process.env.PROD_DB_NAME
-        : process.env.DEV_DB_NAME;
+const databaseName = process.env.DB_NAME;
 
 export const SEQUELIZE_CONFIGS: Options = {
     dialect: String(process.env.DB_TYPE || 'mysql') as Dialect,

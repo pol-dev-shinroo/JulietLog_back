@@ -14,7 +14,7 @@ export function createUserRoutes(
     return {
         create: {
             method: 'post',
-            path: `${path}`,
+            path: `${path}/signup`,
             middleware: [
                 upload.single('file'),
                 multerErrorHandling,
