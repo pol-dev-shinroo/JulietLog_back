@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "juliet",
+        "password": "juliet0824",
+        "database": "juliet_db",
+        "host": "julietlog.c5dj4d0rwj5s.ap-northeast-2.rds.amazonaws.com",
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "root",
+        "password": null,
+        "database": "database_test",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": null,
+        "database": "database_production",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}

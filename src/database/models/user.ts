@@ -8,6 +8,9 @@ declare global {
         password: string;
         profileImg: string;
         isDarkModeEnabled: boolean;
+        neighboreAlert: boolean;
+        commentAlert: boolean;
+        chatRoomAlert: boolean;
     }
 
     type UserCreateInterface = Omit<
@@ -28,6 +31,9 @@ export class UserModel
     public password!: string;
     public profileImg!: string;
     public isDarkModeEnabled!: boolean;
+    public neighboreAlert!: boolean;
+    public commentAlert!: boolean;
+    public chatRoomAlert!: boolean;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
@@ -61,6 +67,21 @@ export const UserGenerator = (sequelize: Sequelize): typeof UserModel => {
                 allowNull: true, // Making it optional
             },
             isDarkModeEnabled: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false, // Assuming a default value of false
+            },
+            neighboreAlert: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false, // Assuming a default value of false
+            },
+            commentAlert: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false, // Assuming a default value of false
+            },
+            chatRoomAlert: {
                 type: DataTypes.BOOLEAN,
                 allowNull: false,
                 defaultValue: false, // Assuming a default value of false

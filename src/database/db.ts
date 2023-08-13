@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import { SEQUELIZE_CONFIGS } from '@/common/db_constants';
 import { UserGenerator, UserModel } from './models/user';
+import { CategoryGenerator, CategoryModel } from './models/category';
 
 import { relations } from './relations';
 
@@ -17,6 +18,7 @@ declare global {
         Sequelize: typeof Sequelize;
         sequelize: Sequelize;
         User: typeof UserModel;
+        Category: typeof CategoryModel;
     }
 }
 
@@ -24,6 +26,7 @@ const db: DB = {
     Sequelize,
     sequelize,
     User: UserGenerator(sequelize),
+    Category: CategoryGenerator(sequelize),
 };
 
 relations(db);
