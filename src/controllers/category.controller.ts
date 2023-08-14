@@ -27,8 +27,11 @@ class categoryController implements Controller {
         const req_data = { ...req.body };
 
         try {
-            const category = await categoryService.create(req_data);
-            // console.log(category + ': 1');
+            const category = await categoryService.create({
+                ...req_data,
+                category: req_data.category,
+                userId: req_data.userId,
+            });
             response.success({ code: StatusCodes.CREATED, data: category });
         } catch (err) {
             response.error(err as ErrorData);

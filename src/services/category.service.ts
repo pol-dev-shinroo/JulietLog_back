@@ -3,9 +3,12 @@ import { categoryRepository } from '@/repositories/index';
 import { NotFoundException } from '../exceptions';
 
 export const categoryService = {
+    categoryRepository,
     async create(categoryData: CategoryCreateInterface) {
         // 카테고리 생성 로직
-        const category = await categoryRepository.create(categoryData);
+        const category = await categoryRepository.create({
+            ...categoryData,
+        });
         return category;
     },
 
