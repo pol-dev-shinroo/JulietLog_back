@@ -8,10 +8,10 @@ export const dbException = (error: any) => {
     };
 };
 
-export const NotFoundException = (table_name: string) => {
+export const NotFoundException = (msg: string) => {
     throw {
         code: StatusCodes.NOT_FOUND,
-        message: `${table_name} does not exist`,
+        message: msg,
     };
 };
 
@@ -20,5 +20,21 @@ export const cloudinaryException = (error: any) => {
         code: StatusCodes.BAD_REQUEST,
         message: 'something wrong with cloudinary',
         error: 'invalid file',
+    };
+};
+
+export const UnauthorizedException = (message: any) => {
+    throw {
+        code: StatusCodes.BAD_REQUEST,
+        message: message,
+        error: 'validation error',
+    };
+};
+
+export const externalApiError = (msg: string) => {
+    throw {
+        code: StatusCodes.BAD_GATEWAY,
+        message: msg,
+        error: 'validation error',
     };
 };

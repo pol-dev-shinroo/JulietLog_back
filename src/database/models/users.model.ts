@@ -1,29 +1,29 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
 
 declare global {
-    interface User extends TimeStampModel {
+    interface Users extends TimeStampModel {
         id: number;
-        nickname: string;
+        nickname?: string;
         email: string;
         password: string;
-        profileImg: string;
-        isDarkModeEnabled: boolean;
-        neighboreAlert: boolean;
-        commentAlert: boolean;
-        chatRoomAlert: boolean;
+        profileImg?: string;
+        isDarkModeEnabled?: boolean;
     }
 
-    type UserCreateInterface = Omit<
-        User,
+    type UsersCreateInterface = Omit<
+        Users,
         'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
     >;
 
-    type UserGetInterface = Omit<User, 'name' | 'email'>;
+    type UsersGetInterface = Omit<
+        Users,
+        'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+    >;
 }
 
-export class UserModel
-    extends Model<User, UserCreateInterface>
-    implements User
+export class UsersModel
+    extends Model<Users, UsersCreateInterface>
+    implements Users
 {
     public id!: number;
     public nickname!: string; // Changed from name to nickname
@@ -39,8 +39,8 @@ export class UserModel
     public readonly updatedAt!: Date;
 }
 
-export const UserGenerator = (sequelize: Sequelize): typeof UserModel => {
-    UserModel.init(
+export const UsersGenerator = (sequelize: Sequelize): typeof UsersModel => {
+    UsersModel.init(
         {
             id: {
                 type: DataTypes.INTEGER.UNSIGNED,
@@ -71,21 +71,6 @@ export const UserGenerator = (sequelize: Sequelize): typeof UserModel => {
                 allowNull: false,
                 defaultValue: false, // Assuming a default value of false
             },
-            neighboreAlert: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false, // Assuming a default value of false
-            },
-            commentAlert: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false, // Assuming a default value of false
-            },
-            chatRoomAlert: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false, // Assuming a default value of false
-            },
         },
         {
             sequelize,
@@ -93,5 +78,5 @@ export const UserGenerator = (sequelize: Sequelize): typeof UserModel => {
             timestamps: true,
         },
     );
-    return UserModel;
+    return UsersModel;
 };
