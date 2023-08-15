@@ -31,6 +31,9 @@ export class UsersModel
     public password!: string;
     public profileImg!: string;
     public isDarkModeEnabled!: boolean;
+    public neighboreAlert!: boolean;
+    public commentAlert!: boolean;
+    public chatRoomAlert!: boolean;
 
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
