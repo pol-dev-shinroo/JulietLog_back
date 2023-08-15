@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from 'sequelize';
-import { UserModel } from './user';
+import { UsersModel } from './users.model';
 
 declare global {
     interface Category extends TimeStampModel {
@@ -69,8 +69,8 @@ export const CategoryGenerator = (
 
 // 관계 설정은 별도로 수행
 export const defineRelations = () => {
-    CategoryModel.belongsTo(UserModel, { foreignKey: 'userId', as: 'user' }); // users 테이블의 id와 연결
-    UserModel.hasMany(CategoryModel, {
+    CategoryModel.belongsTo(UsersModel, { foreignKey: 'userId', as: 'user' }); // users 테이블의 id와 연결
+    UsersModel.hasMany(CategoryModel, {
         foreignKey: 'userId',
         as: 'categories',
     }); // 반대 관계 설정
