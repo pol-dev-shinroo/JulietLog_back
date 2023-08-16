@@ -1,4 +1,9 @@
 import { default as UsersController } from './users.controller';
 import { default as AuthController } from './auth.controller';
+import { default as CategoryController } from './category.controller';
 
-export const controllers = [new UsersController(), new AuthController()];
+export const controllers = [
+    new UsersController(),
+    new AuthController(),
+    new CategoryController(),
+];

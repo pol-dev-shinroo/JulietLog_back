@@ -4,7 +4,7 @@ import { createCategoryRoutes } from '@/routes/category.routes';
 import { StatusCodes } from 'http-status-codes';
 import { categoryService } from '@/services/index';
 
-class categoryController implements Controller {
+class CategoryController implements Controller {
     public path = '/category';
     public router = Router();
 
@@ -72,4 +72,4 @@ class categoryController implements Controller {
     );
 }
 
-export default categoryController;
+export default CategoryController;
