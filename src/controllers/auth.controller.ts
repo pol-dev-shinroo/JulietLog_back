@@ -26,6 +26,7 @@ class AuthController implements Controller {
         const response = customResponse(res);
         const { email, password } = req.body;
         console.log(req.headers.cookie);
+        console.log(req.headers);
         try {
             const { accessToken, refreshToken } = await authService.login({
                 email,
