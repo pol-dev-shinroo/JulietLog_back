@@ -5,7 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import { categoryService } from '@/services/index';
 
 class CategoryController implements Controller {
-    public path = '/category';
+    public path = '/categories';
     public router = Router();
 
     constructor() {
@@ -25,14 +25,15 @@ class CategoryController implements Controller {
     private create: RequestResponseHandler = asyncWrapper(async (req, res) => {
         const response = customResponse(res);
         const req_data = { ...req.body };
+        console.log(req_data);
 
         try {
-            const category = await categoryService.create({
-                ...req_data,
-                category: req_data.category,
-                userId: req_data.userId,
-            });
-            response.success({ code: StatusCodes.CREATED, data: category });
+            // const category = await categoryService.create({
+            //     ...req_data,
+            //     category: req_data.category,
+            //     userId: req_data.userId,
+            // });
+            response.success({ code: StatusCodes.CREATED });
         } catch (err) {
             response.error(err as ErrorData);
         }

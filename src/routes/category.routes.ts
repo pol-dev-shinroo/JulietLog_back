@@ -13,8 +13,8 @@ export function createCategoryRoutes(
     return {
         createCategory: {
             method: 'post',
-            path: `${path}/create`,
-            middleware: [formValidation(create_category_validation)],
+            path: `${path}`,
+            middleware: [payloadValidation(create_category_validation)],
             handler: createCategoryHandler,
         },
         getCategory: {
