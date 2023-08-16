@@ -34,7 +34,7 @@ class App {
             }),
         );
 
-        this.express.use(cookieParser());
+        // this.express.use(cookieParser());
         this.express.use((req, res, next) => {
             res.header('Access-Control-Allow-Credentials', 'true');
             next();

@@ -33,8 +33,16 @@ class AuthController implements Controller {
                 password,
             });
             res.cookie('accesstoken', accessToken, {
-                httpOnly: true,
-                secure: true,
+                httpOnly: true, // Specifies the cookie is only accessible by the server (i.e., not accessible through JavaScript)
+                secure: true, // Specifies the cookie will only be sent over HTTPS
+                domain: 'localhost:3000', // Specifies which hosts are allowed to receive the cookie
+                expires: new Date(Date.now() + 8 * 3600000), // Sets cookie to expire in 8 hours. Adjust as needed.
+                path: '/api/*', // Specifies the URL path that must exist in the requested URL
+                maxAge: 8 * 3600 * 1000, // Sets cookie to expire in 8 hours in milliseconds. Adjust as needed.
+                // Uncomment the following based on your needs:
+                // sameSite: 'Strict',  // Cookie will only be sent in a first-party context and not be sent with requests initiated by third party websites
+                // sameSite: 'Lax',  // Cookie will be sent in a first-party context, and also sent with requests initiated by third party websites that use top-level navigations
+                sameSite: 'none', // Cookie will be sent in all contexts, including with cross-site requests
             });
             res.cookie('refreshtoken', refreshToken, {
                 httpOnly: true,
