@@ -41,7 +41,7 @@ class App {
         });
         this.express.use(morganMiddleware);
         this.express.use(express.json());
-        this.express.use(express.urlencoded({ extended: false }));
+        this.express.use(express.urlencoded({ extended: true }));
         this.express.set('trust proxy', 1);
         this.express.use(
             rateLimit({
