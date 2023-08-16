@@ -42,7 +42,7 @@ class App {
             rateLimit({
                 windowMs: 15 * 60 * 1000,
                 max: 100,
-            })
+            }),
         );
         this.express.use(compression());
     }
