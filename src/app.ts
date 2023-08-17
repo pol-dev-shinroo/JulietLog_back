@@ -23,6 +23,7 @@ class App {
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
         this.initializeCloudinary();
+        this.initializeHome();
     }
 
     private initializeMiddleware() {
@@ -67,6 +68,12 @@ class App {
             cloud_name: process.env.CLOUD_NAME,
             api_key: process.env.CLOUD_API_KEY,
             api_secret: process.env.CLOUD_API_SECRET,
+        });
+    }
+
+    private initializeHome(): void {
+        this.express.get('/', (req, res) => {
+            res.json({ message: true });
         });
     }
 
