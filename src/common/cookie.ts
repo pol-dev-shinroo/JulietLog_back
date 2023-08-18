@@ -2,13 +2,13 @@ import { Response } from 'express';
 
 export const setAccessTokenCookie = (res: Response, token: string) => {
     res.cookie('accesstoken', token, {
-        // httpOnly: true,
-        // secure: true,
+        httpOnly: true,
+        secure: true,
         // domain: 'localhost:3000',
         // expires: new Date(Date.now() + 8 * 3600000),
         // path: '/api/*',
         // maxAge: 8 * 3600 * 1000,
-        // sameSite: 'none',
+        sameSite: 'none',
     });
 };
 
@@ -16,6 +16,7 @@ export const setRefreshTokenCookie = (res: Response, token: string) => {
     res.cookie('refreshtoken', token, {
         httpOnly: true,
         secure: true,
+        sameSite: 'none',
     });
 };
 
