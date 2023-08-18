@@ -2,11 +2,22 @@ import { db, defaultOptions } from '@/database/index';
 import jwt from 'jsonwebtoken';
 import {
     dbException,
-    NotFoundException,
+    InternalServerError,
     UnauthorizedException,
 } from '@/exceptions/index';
 
 export const authRepository = {
+    async findAllTokensbyUserId(userId: number) {
+        try {
+            return await db.Auth.findOne({
+                ...defaultOptions,
+                where: { userId },
+            });
+        } catch (err) {
+            return dbException(err);
+        }
+    },
+
     async createAuthEntry(authData: AuthCreateInterface) {
         try {
             const authEntry = await db.Auth.create(authData);
@@ -25,7 +36,7 @@ export const authRepository = {
             });
 
             if (!authEntry) {
-                return NotFoundException(
+                return InternalServerError(
                     'No authentication entry found for the provided access token.',
                 );
             }
@@ -46,7 +57,7 @@ export const authRepository = {
             });
 
             if (!authEntry) {
-                return NotFoundException(
+                return InternalServerError(
                     'No authentication entry found for the provided refresh token.',
                 );
             }
@@ -65,7 +76,7 @@ export const authRepository = {
             );
 
             if (!updateStatus || updateStatus[0] === 0) {
-                throw NotFoundException(
+                throw InternalServerError(
                     'Unable to update access token for the provided user.',
                 );
             }
@@ -84,7 +95,7 @@ export const authRepository = {
             );
 
             if (!updateStatus || updateStatus[0] === 0) {
-                throw NotFoundException(
+                throw InternalServerError(
                     'Unable to update refresh token for the provided user.',
                 );
             }

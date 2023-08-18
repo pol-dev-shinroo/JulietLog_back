@@ -2,6 +2,9 @@ import { Sequelize } from 'sequelize';
 import { SEQUELIZE_CONFIGS } from '@/common/db_constants';
 import { AuthModel, AuthGenerator } from './models/auth.model';
 import { UsersModel, UsersGenerator } from './models/users.model';
+import { CategoryGenerator, CategoryModel } from './models/category';
+import { PostsGenerator, PostsModel } from './models/posts.model';
+
 import { relations } from './relations';
 
 const sequelize = new Sequelize(SEQUELIZE_CONFIGS);
@@ -18,6 +21,8 @@ declare global {
         sequelize: Sequelize;
         Auth: typeof AuthModel;
         Users: typeof UsersModel;
+        Category: typeof CategoryModel;
+        Posts: typeof PostsModel;
     }
 }
 
@@ -26,6 +31,8 @@ const db: DB = {
     sequelize,
     Auth: AuthGenerator(sequelize),
     Users: UsersGenerator(sequelize),
+    Category: CategoryGenerator(sequelize),
+    Posts: PostsGenerator(sequelize),
 };
 
 relations(db);

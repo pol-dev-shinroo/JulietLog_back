@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import compression from 'compression';
 import { v2 as cloudinary } from 'cloudinary';
 import db from '@/database/db';
+import cookieParser from 'cookie-parser';
 
 interface IAppParamters {
     controllers: Controller[];
@@ -22,6 +23,7 @@ class App {
         this.initializeControllers(controllers);
         this.initializeErrorHandling();
         this.initializeCloudinary();
+        this.initializeHome();
     }
 
     private initializeMiddleware() {
@@ -32,15 +34,21 @@ class App {
                 credentials: true,
             }),
         );
+
+        this.express.use(cookieParser());
+        // this.express.use((req, res, next) => {
+        //     res.header('Access-Control-Allow-Credentials', 'true');
+        //     next();
+        // });
         this.express.use(morganMiddleware);
         this.express.use(express.json());
-        this.express.use(express.urlencoded({ extended: false }));
+        this.express.use(express.urlencoded({ extended: true }));
         this.express.set('trust proxy', 1);
         this.express.use(
             rateLimit({
                 windowMs: 15 * 60 * 1000,
                 max: 100,
-            })
+            }),
         );
         this.express.use(compression());
     }
@@ -60,6 +68,12 @@ class App {
             cloud_name: process.env.CLOUD_NAME,
             api_key: process.env.CLOUD_API_KEY,
             api_secret: process.env.CLOUD_API_SECRET,
+        });
+    }
+
+    private initializeHome(): void {
+        this.express.get('/', (req, res) => {
+            res.json({ message: true });
         });
     }
 

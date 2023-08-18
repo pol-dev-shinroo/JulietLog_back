@@ -1,64 +1,51 @@
 import { RequestHandler } from 'express';
 import { customResponse } from '@/common/index';
 import { StatusCodes } from 'http-status-codes';
-import { authRepository } from '@/repositories/index';
-import { tokenGenerator } from '@/utils/index';
+import { extractToken, tokenGenerator } from '@/utils/index';
 
+declare global {
+    interface tokenInfo {
+        isCookieExist: boolean;
+        accesstoken: string | undefined;
+        isAccValid: false | TokenPayload;
+        refreshtoken: string | undefined;
+        isRefValid: false | TokenPayload;
+    }
+}
+
+/**
+ * req 헤더 쿠키에 토큰 존재 여부를 판단하고,
+ * 존재시 만료된 토큰을 재발급합니다.
+ * 단 refreshtoken이 만료되면 재발급이 불가능하고 로그인을 통해 토큰을 발급받아야합니다
+ */
 const tokenMiddleware = (): RequestHandler => {
     const handler: RequestResponseHandler = async (req, res, next) => {
         const response = customResponse(res);
-        let email: string | null = null;
 
-        if (req.headers.cookie) {
-            const cookies = req.headers.cookie.split(';');
+        let tokenInfo: tokenInfo = {
+            isCookieExist: false,
+            accesstoken: undefined,
+            isAccValid: false,
+            refreshtoken: undefined,
+            isRefValid: false,
+        };
 
-            // Extract tokens from cookies
-            let accessToken = cookies.find((cookie) =>
-                cookie.trim().startsWith('accessToken='),
+        const extract = extractToken(req);
+        if (extract) {
+            const { accesstoken, refreshtoken } = extract;
+            const validAcc = tokenGenerator.validateAccessToken(accesstoken!);
+            const validRefresh = tokenGenerator.validateRefreshToken(
+                refreshtoken!,
             );
-
-            let refreshToken = cookies.find((cookie) =>
-                cookie.trim().startsWith('refreshToken='),
-            );
-
-            if (accessToken) {
-                accessToken = accessToken.split('=')[1];
-
-                // Validate access token
-                const validAccess =
-                    tokenGenerator.validateAccessToken(accessToken);
-
-                if (validAccess) {
-                    email = validAccess.email;
-                } else if (refreshToken) {
-                    refreshToken = refreshToken.split('=')[1];
-                    const validRefresh =
-                        tokenGenerator.validateRefreshToken(refreshToken);
-
-                    if (validRefresh) {
-                        email = validRefresh.email;
-
-                        // Recreate access token and set it in the response
-                        const { accessToken: newAccessToken } =
-                            tokenGenerator.generateAccessToken({
-                                email: email,
-                            });
-                        res.cookie('accesstoken', newAccessToken);
-
-                        // Recreate refresh token and set it in the response
-                        const { refreshToken: newRefreshToken } =
-                            tokenGenerator.generateRefreshToken({
-                                email: email,
-                            });
-                        res.cookie('refreshtoken', newRefreshToken);
-                    }
-                }
-            }
+            tokenInfo = {
+                isCookieExist: true,
+                accesstoken: accesstoken,
+                isAccValid: validAcc,
+                refreshtoken: refreshtoken,
+                isRefValid: validRefresh,
+            };
         }
-
-        if (email) {
-            req.body.email = email; // Setting email in the request body if needed elsewhere
-        }
+        req.body = { ...req.body, tokenInfo };
 
         try {
             next();

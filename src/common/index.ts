@@ -4,3 +4,4 @@ export { customResponse } from './customResponse';
 export { default as asyncWrapper } from './asyncWrapper';
 export { default as BadRequest } from './bad-request';
 import { default as CustomAPIError } from './custom-error';
+export { setAccessTokenCookie, setRefreshTokenCookie } from './cookie';

@@ -8,9 +8,15 @@ export const dbException = (error: any) => {
     };
 };
 
+export const InternalServerError = (msg: string) => {
+    throw {
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
+        message: msg,
+    };
+};
 export const NotFoundException = (msg: string) => {
     throw {
-        code: StatusCodes.NOT_FOUND,
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
         message: msg,
     };
 };
@@ -27,6 +33,14 @@ export const UnauthorizedException = (message: any) => {
     throw {
         code: StatusCodes.BAD_REQUEST,
         message: message,
+        error: 'validation error',
+    };
+};
+
+export const externalApiError = (msg: string) => {
+    throw {
+        code: StatusCodes.BAD_GATEWAY,
+        message: msg,
         error: 'validation error',
     };
 };
