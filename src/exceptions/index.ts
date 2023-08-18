@@ -8,9 +8,15 @@ export const dbException = (error: any) => {
     };
 };
 
+export const InternalServerError = (msg: string) => {
+    throw {
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
+        message: msg,
+    };
+};
 export const NotFoundException = (msg: string) => {
     throw {
-        code: StatusCodes.NOT_FOUND,
+        code: StatusCodes.INTERNAL_SERVER_ERROR,
         message: msg,
     };
 };

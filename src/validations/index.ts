@@ -11,3 +11,5 @@ export {
     local_login_validation,
     google_login_validation,
 } from './auth.validation';
+
+export { post_create_validation } from './posts.validation';

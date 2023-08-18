@@ -3,6 +3,7 @@ import { asyncWrapper, customResponse, createRoutes } from '@/common/index';
 import { createUserRoutes } from '@/routes/users.routes';
 import { StatusCodes } from 'http-status-codes';
 import { usersService } from '@/services/index';
+import { setAccessTokenCookie, setRefreshTokenCookie } from '@/common/cookie';
 
 class UserController implements Controller {
     public path = '/users';
@@ -29,12 +30,9 @@ class UserController implements Controller {
                 ...req_data,
                 profileImg: req_data.profile_img,
             });
-            res.cookie('accesstoken', createData.authTokens.accessToken, {
-                httpOnly: true,
-            });
-            res.cookie('refreshtoken', createData.authTokens.refreshToken, {
-                httpOnly: true,
-            });
+            setAccessTokenCookie(res, createData.authTokens.accessToken);
+            setRefreshTokenCookie(res, createData.authTokens.accessToken);
+
             response.success({ code: StatusCodes.CREATED });
         } catch (err) {
             response.error(err as ErrorData);

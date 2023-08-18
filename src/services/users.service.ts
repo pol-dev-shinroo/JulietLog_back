@@ -14,11 +14,11 @@ export const usersService = {
             profileImg: secure_url!,
         });
 
-        const { refreshToken } = tokenGenerator.generateRefreshToken(user);
         const { accessToken } = tokenGenerator.generateAccessToken(user);
+        const { refreshToken } = tokenGenerator.generateRefreshToken(user);
 
         const authTokens = await this.authRepository.createAuthEntry({
-            userId: user.id,
+            userId: user.userId,
             accessToken,
             refreshToken,
         });

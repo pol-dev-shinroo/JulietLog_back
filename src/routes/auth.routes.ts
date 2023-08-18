@@ -12,18 +12,18 @@ import { upload } from '@/utils/multerSetup';
 
 export function createAuthRoutes(
     path: string,
-    loginhandler: RequestResponseHandler,
+    localLoginhandler: RequestResponseHandler,
     googleLogin: RequestResponseHandler,
 ): CustomRoutes {
     return {
-        loginhandler: {
+        localLogin: {
             method: 'post',
             path: `${path}/login`,
             middleware: [
                 payloadValidation(local_login_validation),
-                // tokenMiddleware(),
+                tokenMiddleware(),
             ],
-            handler: loginhandler,
+            handler: localLoginhandler,
         },
         googleLogin: {
             method: 'post',

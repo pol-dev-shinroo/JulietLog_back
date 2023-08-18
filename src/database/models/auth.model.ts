@@ -2,6 +2,7 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 
 declare global {
     interface Auth extends TimeStampModel {
+        authId: number;
         userId: number;
         accessToken: string;
         refreshToken: string;
@@ -9,7 +10,7 @@ declare global {
 
     type AuthCreateInterface = Omit<
         Auth,
-        'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+        'authId' | 'createdAt' | 'updatedAt' | 'deletedAt'
     >;
 }
 
@@ -17,6 +18,7 @@ export class AuthModel
     extends Model<Auth, AuthCreateInterface>
     implements Auth
 {
+    public authId!: number;
     public userId!: number;
     public accessToken!: string;
     public refreshToken!: string;
@@ -28,14 +30,16 @@ export class AuthModel
 export const AuthGenerator = (sequelize: Sequelize): typeof AuthModel => {
     AuthModel.init(
         {
+            authId: {
+                type: DataTypes.INTEGER.UNSIGNED,
+                autoIncrement: true,
+                allowNull: false,
+                primaryKey: true,
+            },
             userId: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,
-                primaryKey: true,
-                references: {
-                    model: 'users', // name of Target model
-                    key: 'id', // key in Target model
-                },
+                unique: true,
             },
             accessToken: {
                 type: DataTypes.STRING,

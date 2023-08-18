@@ -36,10 +36,10 @@ class App {
         );
 
         this.express.use(cookieParser());
-        this.express.use((req, res, next) => {
-            res.header('Access-Control-Allow-Credentials', 'true');
-            next();
-        });
+        // this.express.use((req, res, next) => {
+        //     res.header('Access-Control-Allow-Credentials', 'true');
+        //     next();
+        // });
         this.express.use(morganMiddleware);
         this.express.use(express.json());
         this.express.use(express.urlencoded({ extended: true }));

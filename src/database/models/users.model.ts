@@ -2,7 +2,7 @@ import { Sequelize, DataTypes, Model } from 'sequelize';
 
 declare global {
     interface Users extends TimeStampModel {
-        id: number;
+        userId: number;
         nickname?: string;
         email: string;
         password: string;
@@ -12,12 +12,12 @@ declare global {
 
     type UsersCreateInterface = Omit<
         Users,
-        'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+        'userId' | 'createdAt' | 'updatedAt' | 'deletedAt'
     >;
 
     type UsersGetInterface = Omit<
         Users,
-        'id' | 'createdAt' | 'updatedAt' | 'deletedAt'
+        'userId' | 'createdAt' | 'updatedAt' | 'deletedAt'
     >;
 }
 
@@ -25,7 +25,7 @@ export class UsersModel
     extends Model<Users, UsersCreateInterface>
     implements Users
 {
-    public id!: number;
+    public userId!: number;
     public nickname!: string; // Changed from name to nickname
     public email!: string;
     public password!: string;
@@ -42,7 +42,7 @@ export class UsersModel
 export const UsersGenerator = (sequelize: Sequelize): typeof UsersModel => {
     UsersModel.init(
         {
-            id: {
+            userId: {
                 type: DataTypes.INTEGER.UNSIGNED,
                 autoIncrement: true,
                 primaryKey: true,

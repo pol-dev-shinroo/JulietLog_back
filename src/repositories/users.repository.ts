@@ -1,5 +1,5 @@
 import { db, defaultOptions } from '@/database/index';
-import { dbException, NotFoundException } from '@/exceptions/index';
+import { dbException, InternalServerError } from '@/exceptions/index';
 
 export const usersRepository = {
     async create(userData: UsersCreateInterface) {
@@ -18,7 +18,7 @@ export const usersRepository = {
                 where: userData,
             });
             if (!user) {
-                return NotFoundException('user does not exist');
+                return InternalServerError('user does not exist');
             }
             return user;
         } catch (err) {
